@@ -43,21 +43,26 @@ void loop() {
   Serial.print("초음파 센서 거리: "); Serial.print(distance); Serial.println(" cm"); // 시리얼 모니터에 거리를 출력
 
   /* 초음파 센서로 측정된 거리가 일정 거리 미만이면 */
-  if(distance < 4) {
+  if(distance < 3.5) {
     Serial.println("초음파 센서에 물체가 감지됨");
     delay(1800);
     Serial.print("모터 작동 중...");
     digitalWrite(motorPin, HIGH); delay(5000); digitalWrite(motorPin, LOW); // 일정 시간동안 모터를 작동함
     Serial.println(" 작동 완료.");
+    servo.write(0); delay(400);
   }
 
   IRstatus = digitalRead(IRPin); // 적외선 센서로부터 상태 값을 불러와 IRstatus 변수에 저장
   Serial.print("적외선 센서 상태: "); Serial.println(IRstatus ? "감지된 물체가 없음" : "물체를 감지함"); // 시리얼 모니터에 적외선 센서 상태를 출력
 
+  /* 적외선 센서에 물체가 감지되면 */
   if(IRstatus == 0) {
     Serial.println("적외선 센서에 물체가 감지됨");
     delay(500);
-    servo.write(180); delay(1500); servo.write(0); delay(500);
+    for(int i = 1; i <= 180; i ++) {
+      servo.write(i); //delay(1000); // 서보 모터를 180도 회전시켰다가 다시 원래 자리로 회전
+      delay(5);
+    }
   }
 
   delay(100); Serial.println();
