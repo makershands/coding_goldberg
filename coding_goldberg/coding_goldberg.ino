@@ -9,6 +9,9 @@ int IRPin = 7; // 적외선 센서의 입력 핀을 7번 핀으로 지정
 int motorPin = 8; // DC 모터의 핀을 8번 핀으로 지정
 int servoPin = 9; // 서보 모터의 핀을 9번 핀으로 지정
 
+int m1 = 10;
+int m2 = 11;
+
 Servo servo; // 서보 모터 객체 선언
 
 unsigned long duration; // 초음파 센서 시간 값을 저장할 변수를 선언
@@ -25,6 +28,9 @@ void setup() {
   pinMode(motorPin, OUTPUT); // DC 모터 핀을 출력 모드로 설정
   servo.attach(servoPin); // 서보 모터 핀으로 지정한 핀에서 서보 모터를 사용
   servo.write(0); // 서보 모터를 원래 자리로 회전
+
+  pinMode(m1, OUTPUT);
+  pinMode(m2, OUTPUT);
 
   Serial.begin(9600); // 시리얼 통신을 9,600 baud 속도로 시작
 }
@@ -43,13 +49,17 @@ void loop() {
   Serial.print("초음파 센서 거리: "); Serial.print(distance); Serial.println(" cm"); // 시리얼 모니터에 거리를 출력
 
   /* 초음파 센서로 측정된 거리가 일정 거리 미만이면 */
-  if(distance < 3.5) {
+  if(distance < 4) {
     Serial.println("초음파 센서에 물체가 감지됨");
-    delay(1800);
+    delay(1000);
     Serial.print("모터 작동 중...");
-    digitalWrite(motorPin, HIGH); delay(5000); digitalWrite(motorPin, LOW); // 일정 시간동안 모터를 작동함
+    //digitalWrite(motorPin, HIGH); delay(5000); digitalWrite(motorPin, LOW); // 일정 시간동안 모터를 작동함
+
+    digitalWrite(m1, HIGH); digitalWrite(m2, LOW); delay(3500);
+    digitalWrite(m1, LOW); digitalWrite(m2, LOW);
+
     Serial.println(" 작동 완료.");
-    servo.write(0); delay(400);
+    servo.write(0); delay(500); 
   }
 
   IRstatus = digitalRead(IRPin); // 적외선 센서로부터 상태 값을 불러와 IRstatus 변수에 저장
@@ -65,5 +75,5 @@ void loop() {
     }
   }
 
-  delay(100); Serial.println();
+  delay(80); Serial.println();
 }
