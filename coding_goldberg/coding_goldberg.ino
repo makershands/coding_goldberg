@@ -25,22 +25,22 @@ void setup() {
   pinMode(m1, OUTPUT); // 모터 드라이버 핀을 출력 모드로 설정
   pinMode(m2, OUTPUT); // 모터 드라이버 핀을 출력 모드로 설정
   servo.attach(servoPin); // 서보 모터 핀으로 지정한 핀에서 서보 모터를 사용
-  servo.write(0); // 서보 모터를 원래 자리로 회전
+  servo.write(0); // 서보 모터를 원래 자리(0도)로 회전
 
   Serial.begin(9600); // 시리얼 통신을 9,600 baud 속도로 시작
 }
 
 void loop() {
   /* 초음파 센서로 초음파를 발생함 */
-  digitalWrite(trigPin, LOW); digitalWrite(echoPin, LOW);
+  digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
   digitalWrite(trigPin, HIGH);
   delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
 
-  /* 초음파 센서로 발생한 초음파가 되돌아오면 그 시간을 바탕으로 물체까지의 거리를 계산함 */
-  duration = pulseIn(echoPin, HIGH); // 초음파 센서로 초음파가 되돌아오기까지의 시간을 duration 변수에 저장
-  distance = ((float)(345.26 * duration) / 10000) / 2; // 초음파가 되돌아오기까지의 시간을 바탕으로 거리 계산(23℃ 기준)하여 cm 단위로 distance 변수에 저장
+  /* 발생한 초음파가 초음파 센서로 돌아오면 걸린 시간을 바탕으로 물체까지의 거리를 계산함 */
+  duration = pulseIn(echoPin, HIGH); // 초음파가 초음파 센서로 돌아오기까지의 시간을 duration 변수에 저장
+  distance = ((float)(345.24 * duration) / 10000) / 2; // 초음파가 돌아오기까지 걸린 시간을 바탕으로 거리를 계산(23℃ 기준)하여 cm 단위로 distance 변수에 저장
   Serial.print("초음파 센서 거리: "); Serial.print(distance); Serial.println(" cm"); // 시리얼 모니터에 거리를 출력
 
   /* 초음파 센서로 측정된 거리가 일정 거리 미만이면 */
@@ -50,13 +50,14 @@ void loop() {
 
     Serial.print("모터 작동 중...");
     digitalWrite(m1, HIGH); digitalWrite(m2, LOW); delay(3750); // 일정 시간동안 DC 모터를 작동함
-    digitalWrite(m1, LOW); digitalWrite(m2, LOW);
-
+    digitalWrite(m1, LOW); digitalWrite(m2, LOW); // DC 모터 작동을 종료함
     Serial.println(" 작동 완료.");
-    servo.write(0); delay(750);
+
+    servo.write(0); delay(800); // 서보모터를 제자리로 회전하고 0.8초 대기함
   }
 
-  IRstatus = digitalRead(IRPin); // 적외선 센서로부터 상태 값을 불러와 IRstatus 변수에 저장
+  /* 적외선 센서로부터 상태 값을 불러와 IRstatus 변수에 저장 */
+  IRstatus = digitalRead(IRPin);
   Serial.print("적외선 센서 상태: "); Serial.println(IRstatus ? "감지된 물체가 없음" : "물체를 감지함"); // 시리얼 모니터에 적외선 센서 상태를 출력
 
   /* 적외선 센서에 물체가 감지되면 */
@@ -72,5 +73,5 @@ void loop() {
     Serial.println(" 작동 완료.");
   }
 
-  delay(75); Serial.println();
+  delay(50); Serial.println(); // 50밀리초 대기함
 }
