@@ -51,7 +51,7 @@ void loop() {
     delay(1000); // 1초 대기함
 
     Serial.print("모터 작동 중...");
-    digitalWrite(m1, HIGH); digitalWrite(m2, LOW); delay(3750); // 일정 시간동안 DC 모터를 작동함
+    digitalWrite(m1, HIGH); digitalWrite(m2, LOW); delay(4000); // 일정 시간동안 DC 모터를 작동함
     digitalWrite(m1, LOW); digitalWrite(m2, LOW); // DC 모터 작동을 종료함
     Serial.println(" 작동 완료.");
 
