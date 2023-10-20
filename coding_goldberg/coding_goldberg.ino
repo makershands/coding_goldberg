@@ -1,14 +1,14 @@
 #include <Servo.h> // 서보모터 사용에 필요한 라이브러리를 포함
 
 /* 센서 핀 번호 지정 */
-int trigPin = 5; // 초음파 센서의 trig 핀을 5번 핀으로 지정(숫자 5를 echoPin 변수에 저장함)
-int echoPin = 6; // 초음파 센서의 echo 핀을 6번 핀으로 지정(숫자 6을 echoPin 변수에 저장함)
-int IRPin = 7; // 적외선 센서의 입력 핀을 7번 핀으로 지정(숫자 7을 IRPin 변수에 저장함)
+const int trigPin = 5; // 초음파 센서의 trig 핀을 5번 핀으로 지정(숫자 5를 echoPin 변수에 저장함)
+const int echoPin = 6; // 초음파 센서의 echo 핀을 6번 핀으로 지정(숫자 6을 echoPin 변수에 저장함)
+const int IRPin = 7; // 적외선 센서의 입력 핀을 7번 핀으로 지정(숫자 7을 IRPin 변수에 저장함)
 
 /* 모터 핀 번호 지정 */
-int servoPin = 9; // 서보모터의 핀을 9번 핀으로 지정
-int m1 = 10; // 모터 드라이버의 핀을 10번 핀으로 지정
-int m2 = 11; // 모터 드라이버의 핀을 11번 핀으로 지정
+const int servoPin = 9; // 서보모터의 핀을 9번 핀으로 지정
+const int m1 = 10; // 모터 드라이버의 핀을 10번 핀으로 지정
+const int m2 = 11; // 모터 드라이버의 핀을 11번 핀으로 지정
 Servo servo; // 서보모터 객체 선언
 
 unsigned long duration; // 초음파 센서 시간 값을 저장할 변수를 선언
