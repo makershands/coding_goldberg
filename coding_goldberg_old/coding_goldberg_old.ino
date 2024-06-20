@@ -54,11 +54,13 @@ void loop() {
     Serial.println(" 작동 완료.");
 
     delay(1000); // 서보모터 이동 후 1.000초 대기 (delay 괄호 안의 1000은 1초를 의미합니다.)
-    servo.write(0);// 서보모터 원위치
+    for(int i = 180; i >= 0; i --) {
+      servo.write(i); delay(5);
+    }
     delay(1000); // 서보모터 원위치 후 1.000초 대기 (delay 괄호 안의 1000은 1초를 의미합니다.)
 
     Serial.print("모터 작동 중...");
-    digitalWrite(m1, HIGH); digitalWrite(m2, LOW); delay(3000); // 3.000초 시간 동안 DC 모터를 작동함
+    digitalWrite(m1, HIGH); digitalWrite(m2, LOW); delay(3315); // 3.315초 시간 동안 DC 모터를 작동함
     digitalWrite(m1, LOW); digitalWrite(m2, LOW); // DC 모터 작동을 종료함
     Serial.println(" 작동 완료.");
 
