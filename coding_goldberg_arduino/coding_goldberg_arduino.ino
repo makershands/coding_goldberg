@@ -82,4 +82,6 @@ void loop() {
     motor_carry();
     Serial.println("모터 작동 완료.");
   }
+
+  delay(50);
 }
