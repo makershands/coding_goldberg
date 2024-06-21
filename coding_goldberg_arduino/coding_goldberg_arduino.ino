@@ -12,7 +12,7 @@ const int m2 = 11;     // 모터 드라이버의 핀을 11번 핀으로 지정
 const int speed = 5;
 Servo servo;
 
-const float threshold = 10;
+const float threshold = 7;
 
 void setup() {
   /* 센서 핀 모드 설정 */
@@ -39,7 +39,7 @@ float measure_distance(){
   /* 발생한 초음파가 초음파 센서로 돌아오면 걸린 시간을 바탕으로 물체까지의 거리를 계산함 */
   unsigned long duration = pulseIn(echoPin, HIGH); // 초음파가 초음파 센서로 돌아오기까지의 시간을 duration 변수에 저장
   float result = (344.97 * (float)duration / 10000) / 2; // 초음파가 돌아오기까지 걸린 시간을 바탕으로 거리를 계산(23℃ 기준)하여 cm 단위로 distance 변수에 저장
-  Serial.print("초음파 센서 거리: "); Serial.print(result); Serial.println(" mm"); // 시리얼 모니터에 거리를 출력
+  Serial.print("초음파 센서 거리: "); Serial.print(result); Serial.println(" cm"); // 시리얼 모니터에 거리를 출력
   return result;
 }
 
